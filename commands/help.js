@@ -14,6 +14,7 @@ module.exports.run = async(senko, message, args, con) => {
         var namelist = "";
         var desclist = "";
         var usage = "";
+        if (!usage) var usage = "None"
 
         let result = jsfiles.forEach((f, i) => {
             let props = require(`./${f}`);
@@ -23,7 +24,7 @@ module.exports.run = async(senko, message, args, con) => {
         
             // send help text
             
-            let string = ''
+            let string = `${namelist} ${desclist} ${usage}`
             senko.commands.map(x => string += x+'\n')
             message.author.send(string);
         });
