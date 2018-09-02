@@ -4,9 +4,9 @@ const senko = new Discord.Client({disableEveryone: true});
 module.exports.run = async(senko, message, args, con) => {
     let str = ''
     senko.commands.array().forEach( (i,v) =>{
-            str += $`{i.help.name}\n`
+            str += `${i.help.name}\n`
     })
-    msg.channel.send(str)
+    message.channel.send(str)
     
 }
 
