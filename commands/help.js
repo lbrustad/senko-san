@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-
+const senko = new Discord.Client({disableEveryone: true});
 module.exports.run = async(senko, message, args, con) => {
     fs.readdir("./commands/", (err, files) => {
         if(err) console.error(err);
@@ -23,7 +23,9 @@ module.exports.run = async(senko, message, args, con) => {
         
             // send help text
             
-            message.author.send(`\`\`\`\n**${namelist}** \n${desclist} \n${usage}\n\`\`\``);
+            let string = ''
+            senko.commands.map(x => string += x+'\n')
+            message.author.send(string);
         });
         message.channel.send("Sent a list of commands! Check the DMs")
     });
