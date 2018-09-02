@@ -50,7 +50,7 @@ senko.on('message', async message => {
   let command = args.shift().toLowerCase();
 
   let cmdFile = senko.commands.get(cmd.slice(prefix.length));
-  if (cmdFile) cmdFile.run(senko, msg, args);
+  if (cmdFile) cmdFile.run(senko, message, args);
 });
 
 // The part that makes this bot go online
