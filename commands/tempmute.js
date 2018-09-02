@@ -4,6 +4,8 @@ const ms = require("ms");
 exports.run = async (senko, message, args) => {
     let mutetarget = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if (!mutetarget) await message.channel.send("`Error 404:` Couldn't find target")
+    if(!args)
+    await message.channel.send("Usage: ```tempmute {user} {time}```")
     if (mutetarget.hasPermission("MANAGE_MESSAGES")) await message.channel.send("`Error 403:`No permission to mute.")
     else try{
         let mutedrole = message.guild.roles.find(`name`, "muted")

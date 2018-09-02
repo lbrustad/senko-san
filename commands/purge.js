@@ -1,4 +1,6 @@
 exports.run = async (client, message, args) => {
+        if(!args)
+            await message.channel.send("Usage: ```purge {amount}```")
         if(!message.member.hasPermission("MANAGE_MESSAGES"))
             return message.channel.send("Unable to purge, You don't have the permission to do so.");
         const deleteCount = parseInt(args[0], 10);

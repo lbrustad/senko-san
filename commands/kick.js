@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const senko = new Discord.Client({disableEveryone: true});
 exports.run = async (client, message, args) => {
+        if(!args)
+          await message.channel.send("Usage: ```kick {user} {reason}```")
         if(!message.member.roles.hasPermission("KICK_MEMBERS"))
           return message.channel.send("`Error 403:`You don't have the permission to use this command.");
         
