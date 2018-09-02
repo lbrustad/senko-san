@@ -9,7 +9,7 @@ const pack = require('./package.json')
 // Error handling
 senko.on('error', async (err) => {
      await console.log(await err)
-}
+})
 // Startup Procedure
 senko.on('ready', async () => {
     console.log(`-----------------------------------`)
@@ -19,7 +19,7 @@ senko.on('ready', async () => {
     console.log(`[${senko.user.username}] is now online.`);
     console.log(`Bot is on ${senko.guilds.size} servers.`)
     senko.user.setActivity("w/ Nakano");
-}));
+});
 senko.commands = new Enmap();
 // Commands
 fs.readdir('./commands/', (err, files) => {
