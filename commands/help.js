@@ -6,7 +6,7 @@ module.exports.run = async(senko, message, args, con) => {
     senko.commands.array().forEach( (i,v) =>{
             str += `${i.help.name}\n`
     })
-    message.channel.send(str)
+    message.channel.send(`Commands list:\`\`\`${str}\`\`\``)
     
 }
 
