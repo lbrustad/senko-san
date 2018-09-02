@@ -1,0 +1,8 @@
+"Basic Commands: \n
+`echo {message}` echoes a message.\n
+`helloworld` Hello, World!\n
+`botinfo` Shows bot info\n
+`serverinfo` Shows server info\n
+`ping` Displays latency\n
+`help` Shows this page\n
+`docs` Shows link to website
