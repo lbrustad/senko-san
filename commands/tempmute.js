@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const ms = require("ms");
+
 exports.run = async (senko, message, args) => {
     let mutetarget = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if (!mutetarget) await message.channel.send("`Error 404:` Couldn't find target")
@@ -22,25 +23,23 @@ exports.run = async (senko, message, args) => {
                 });
             }catch(e){
                 await message.channel.send(`An error has occured!\`\`\`${e.stack}\`\`\``);
-            }    
+            }
         }
     }
     finally{
-        let mutetime = args[1];
-    if(!mutetime) await message.channel.send("`Error 411:`Invalid Argument.");
+      let mutetime = args[1];
+      if(!mutetime) await message.channel.send("`Error 411:`Invalid Argument.");
 
-    await(mutetarget.addRole(mutedrole.id));
-    message.channel.send(`<@${mutetarget.id}> has been temporarily muted for ${ms(ms(mutetime))}`);
+      await(mutetarget.addRole(mutedrole.id));
+      message.channel.send(`<@${mutetarget.id}> has been temporarily muted for ${ms(mutetime)}`);
 
-    setTimeout(function(){
-        mutetarget.removeRole(mutedrole.id)
-    }, ms(mutetime));
+      setTimeout(function(){
+          mutetarget.removeRole(mutedrole.id)
+      }, ms(mutetime));
     }
-
-    
 }
-    
-    
+
+
 
 
 exports.help = {
