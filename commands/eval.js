@@ -14,7 +14,7 @@ exports.run = async (senko, message, args) => {
     }
   }
 });
-}
+
 
 exports.help = {
     name: 'eval'
