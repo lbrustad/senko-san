@@ -44,6 +44,13 @@ senko.on('message', async message => {
   if (message.content.indexOf(prefix) !== 0) return;
 	if (!message.content.startsWith(prefix)) return;
 
+	function clean(text) {
+  if (typeof(text) === "string")
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+  else
+      return text;
+}
+	
   let messageArray = message.content.split(' ');
   let cmd = messageArray[0];
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
