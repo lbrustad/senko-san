@@ -13,8 +13,8 @@ exports.run = async (senko, message, args) => {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }
   }
-});
-
+);
+}
 
 exports.help = {
     name: 'eval'
