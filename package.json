@@ -4,12 +4,13 @@
   "description": "Discord.JS bot",
   "main": "senkoCore.js",
   "ownerid": "<@!254542844197470209>",
+  "owner" : "254542844197470209",
   "scripts": {
     "start": "nodemon senkoCore.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://git.litchschist.net/Cappuchino/Senko-san"
+    "url": "https://github.com/Crkza/senko-san"
   },
   "keywords": [
     "Cappuchino",
