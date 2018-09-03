@@ -52,7 +52,7 @@ senko.on('message', async message => {
   let cmdFile = senko.commands.get(cmd.slice(prefix.length));
   if (cmdFile) cmdFile.run(senko, message, args);
 	
-	  if (message.content.startsWith(config.prefix + "eval")) {
+	  if (message.content.startsWith(prefix + "eval")) {
     if(message.author.id !== pack.owner) return;
     try {
       const code = args.join(" ");
