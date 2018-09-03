@@ -51,7 +51,23 @@ senko.on('message', async message => {
 
   let cmdFile = senko.commands.get(cmd.slice(prefix.length));
   if (cmdFile) cmdFile.run(senko, message, args);
+	
+	  if (message.content.startsWith(config.prefix + "eval")) {
+    if(message.author.id !== pack.owner) return;
+    try {
+      const code = args.join(" ");
+      let evaled = eval(code);
+
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled);
+
+      message.channel.send(clean(evaled), {code:"xl"});
+    } catch (err) {
+      message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+    }
+  }
 });
+
 
 // The part that makes this bot go online
 senko.login(process.env.token)
