@@ -7,7 +7,6 @@ module.exports.run = async(senko, message, args, con) => {
 
     if(cmds[cmd]) {
         message.channel.send(cmds[cmd]);}
-    else message.channel.send("Sorry, This command does not exist.")
 }
 
 module.exports.help = {
