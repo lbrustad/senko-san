@@ -1,0 +1,3 @@
+{
+    "all": "Showing all commands for Project Senko\n```Basic Commands```\n`botinfo` Displays info about the bot.\n`serverinfo` Displays info about the current server.\n`help` Displays this text\n`docs` Links to the bot's website.\n`helloworld` Hello world!\n```Moderation Commands```\n`kick {user} {reason}` Kicks a user from the server.\n`ban {user} {reason}` Bans a user from the server\n`purge {amount}` Purges a specified amount of messages. (Max 100)\n`tempmute {user} {duration}` Temporarily mutes a person from the server.(First time using this will automatically create a mute role. Set it up yourself.)\n```Utility Commands```\n`eval {JS Code}` Evaluates Code **ONLY LIMITED TO DEVS**"
+}

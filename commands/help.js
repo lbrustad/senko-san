@@ -1,12 +1,13 @@
-const fs = require("fs");
+const cmds = require("../commands.json")
 const Discord = require("discord.js");
 const senko = new Discord.Client({disableEveryone: true});
 module.exports.run = async(senko, message, args, con) => {
-    let str = ''
-    senko.commands.array().forEach( (i,v) =>{
-            str += `${i.help.name}\n`
-    })
-    message.channel.send(`Commands list:\`\`\`${str}\`\`\``)
+    let cmd = args.join(" ")
+    if(!cmd) message.channel.send(cmds.all);
+
+    if(thisSession.hasOwnProperty(cmd) == false){
+        message.channel.send(cmds.cmd)
+    }
     
 }
 
