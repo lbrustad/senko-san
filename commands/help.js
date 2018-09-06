@@ -5,7 +5,7 @@ module.exports.run = async(senko, message, args, con) => {
     let cmd = args.join(" ")
     if(!cmd) message.channel.send(cmds.all);
 
-    if(thisSession.hasOwnProperty(cmd) == false){
+    if(cmds.hasOwnProperty(cmd) == false){
         message.channel.send("Sorry, This command does not exist.")
     }
     else{
