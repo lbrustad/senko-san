@@ -6,7 +6,7 @@
   "ownerid": "<@!254542844197470209>",
   "owner" : "254542844197470209",
   "scripts": {
-    "start": "nodemon senkoCore.js"
+    "start": "node senkoCore.js"
   },
   "repository": {
     "type": "git",

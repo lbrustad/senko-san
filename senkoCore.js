@@ -5,7 +5,7 @@ const senko = new Discord.Client({ disableEveryone: true });
 const Enmap = require('enmap');
 const fs = require('fs');
 const pack = require('./package.json')
-
+require('http').createServer().listen(3000)
 // Error handling
 senko.on('error', async (err) => {
      await console.log(await err)
@@ -77,6 +77,6 @@ senko.on('message', async message => {
 
 
 // The part that makes this bot go online
-senko.login(process.env.token)
+senko.login(process.env.token).catch()
 // Self hosting
 // senko.login(token)
