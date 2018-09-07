@@ -4,7 +4,8 @@ exports.run = async (senko, message, args) => {
     
     const sayMessage = args.join(" ");
     if(!sayMessage){
-        await message.channel.send("Usage: ```echo {message}```")}        message.delete().catch(O_o=>{}); 
+        await message.channel.send("Usage: ```echo {message}```")};        
+        message.delete().catch(O_o=>{}); 
         message.channel.send(sayMessage);
 }
 
