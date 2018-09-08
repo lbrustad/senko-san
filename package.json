@@ -6,7 +6,7 @@
   "ownerid": "<@!254542844197470209>",
   "owner": "254542844197470209",
   "scripts": {
-  "start": "nohup node main.js > log.txt 2>&1 & echo $! > pid.txt",
+  "start": "nohup nodemon senkoCore.js > log.txt 2>&1 & echo $! > pid.txt",
   "stop": "kill $(tail pid.txt)",
   },
   "repository": {
