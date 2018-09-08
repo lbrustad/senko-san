@@ -16,7 +16,7 @@ exports.run = async (senko, message, args) => {
                     name: "muted",
                     color: "#00000)",
                     permissions: []
-                })
+                });
                 message.guild.channel.forEach(async (channel, id) => {
                     await channel.overwritePermissions(mutedrole, {
                         SEND_MESSAGES: false,
@@ -46,6 +46,6 @@ exports.run = async (senko, message, args) => {
 
 exports.help = {
     name: 'tempmute',
-    description: "Temporarily mutes a user",
-    Usage: "usage [User] [Time]"
+    description: "Temporarily mutes a person from the server. (First time using this will automatically create a mute role. Set it up yourself.)",
+    Usage: "tempmute {user} {duration}"
 }

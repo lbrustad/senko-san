@@ -20,5 +20,7 @@ exports.run = async (client, message, args) => {
     message.channel.send(`${member.user.tag} has been banned by ${message.author.tag} for: ${reason}`);
 }
   exports.help = {
-    name: 'ban'
+    name: 'ban',
+    description: 'Bans a user from the server',
+    usage: 'ban {user} {reason}'
 }

@@ -7,19 +7,16 @@ exports.run = async (senko, message, args) => {
     .setThumbnail(serverIcon)
     .setDescription("Displaying Information about this Server.")
     .setColor("#f28a30")
-
     .setTimestamp()
     .addField("Server Name", message.guild.name)
     .addField("Created on", message.guild.createdAt)
     .addField("You Joined on", message.member.joinedAt)
     .addField("Member Count", message.guild.memberCount);
 
-
     await message.channel.send(embed);
-  
 }
 
 exports.help = {
     name: 'serverinfo',
-    description: "Shows server info"
+    description: "Displays info about the current server."
 }

@@ -4,7 +4,7 @@
   "description": "Discord.JS bot",
   "main": "senkoCore.js",
   "ownerid": "<@!254542844197470209>",
-  "owner" : "254542844197470209",
+  "owner": "254542844197470209",
   "scripts": {
     "start": "node senkoCore.js"
   },

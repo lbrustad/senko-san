@@ -25,5 +25,7 @@ exports.run = async (client, message, args) => {
 }
 
 exports.help = {
-    name: 'kick'
+    name: 'kick',
+    description: 'Kicks a user from the server.',
+    usage: 'kick {user} {reason}'
 }
