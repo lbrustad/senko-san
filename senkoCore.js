@@ -8,20 +8,15 @@ const fs = require('fs');
 const p = require('path');
 const { token } = require('./config.json');
 require('http').createServer().listen(3000);
+
 // Error handling
 senko.on('error', err => {
   console.log(err);
 });
 senko.commands = new Enmap({name: 'commands'});
 senko.settings = new Enmap({name: 'settings'});
-// Startup Procedure
-senko.on('ready', async () => {
 
-
-});
 // Commands
-
-
 function loadCommands(path) {
   fs.readdir(path, async (err, files) => {
     if (err) console.log(err);
@@ -59,8 +54,7 @@ function loadEvents(path) {
   });
 }
 
-
-async function start() {
+const start = async () => {
   await loadCommands(p.join(__dirname, "commands"));
   await loadEvents(p.join(__dirname, "events"));
 }
