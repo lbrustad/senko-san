@@ -1,6 +1,7 @@
 // Prerequisites loading code
 const {
-  token
+  token,
+  mongourl
 } = require('./config.json');
 const Discord = require('discord.js');
 const senko = new Discord.Client({
@@ -10,13 +11,19 @@ const Enmap = require('enmap');
 const fs = require('fs');
 const pack = require('./package.json');
 const p = require('path');
+const mongo = require('./provider/mongo');
 require('http').createServer().listen(3000);
-// Error handling
-senko.on('error', err => {
-  console.log(err);
-})
-// Startup Procedure
-senko.on('ready', async () => {
+
+
+senko.once('ready', async () => {
+
+  const db = new mongo({url: mongourl});
+  senko.db = db;
+
+  senko.guilds.forEach(guild => {
+    senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
+  });
+  
   console.log(`-----------------------------------`)
   console.log(`Version ${pack.version}`)
   console.log(`Made by ${pack.author}`)
@@ -25,7 +32,9 @@ senko.on('ready', async () => {
   console.log(`Bot is on ${senko.guilds.size} servers.`)
   await senko.user.setActivity("w/ Nakano");
 });
+
 senko.commands = new Enmap();
+senko.settings = new Enmap({name: 'settings'});
 // Commands
 
 
@@ -65,7 +74,6 @@ function loadEvents(path) {
     }
   });
 }
-
 
 async function start(){
   await loadCommands(p.join(__dirname, "commands"));
