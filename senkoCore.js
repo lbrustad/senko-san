@@ -77,6 +77,4 @@ senko.on('message', message => {
 
 
 // The part that makes this bot go online
-senko.login(process.env.token).catch()
-// Self hosting
-// senko.login(token)
+senko.login(token).catch()
