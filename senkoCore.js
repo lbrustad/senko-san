@@ -1,83 +1,47 @@
 // Prerequisites loading code
-const {
-  token,
-  mongourl
-} = require('./config.json');
 const Discord = require('discord.js');
-const senko = new Discord.Client({
-  disableEveryone: true
-});
+const senko = new Discord.Client({ disableEveryone: true });
 const Enmap = require('enmap');
 const fs = require('fs');
-const pack = require('./package.json');
 const p = require('path');
-const mongo = require('./provider/mongo');
+const { token } = require('./config.json');
+const pack = require('./package.json');
 require('http').createServer().listen(3000);
 
+senko.commands = new Enmap({name: 'commands'});
+//senko.settings = new Enmap({name: 'settings'});
 
-senko.once('ready', async () => {
+function *walkSync(dir) {
+  const files = fs.readdirSync(dir);
 
-  const db = new mongo({url: mongourl});
-  senko.db = db;
-
-  senko.guilds.forEach(guild => {
-    senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
-  });
-  
-  console.log(`-----------------------------------`)
-  console.log(`Version ${pack.version}`)
-  console.log(`Made by ${pack.author}`)
-  console.log(`Incomplete Alpha`)
-  console.log(`[${senko.user.username}] is now online.`);
-  console.log(`Bot is on ${senko.guilds.size} servers.`)
-  await senko.user.setActivity("w/ Nakano");
-});
-
-senko.commands = new Enmap();
-senko.settings = new Enmap({name: 'settings'});
-// Commands
-
-
-function loadCommands(path) {
-  fs.readdir(path, async (err, files) => {
-    if (err) console.log(err);
-    for (var file of files) {
-      if (fs.statSync(path + '/' + file).isDirectory()) await loadCommands(path + '/' + file);
-      try {
-        if (file.endsWith('.js')) {
-          var props = require(path + '/' + file);
-          console.log(`${file} loaded`);
-          senko.commands.set(props.help.name, props);
-        }
-      } catch (err) {
-        console.log(err.stack);
-      }
+  for (const file of files) {
+    const pathToFile = p.join(dir, file);
+    const isDirectory = fs.statSync(pathToFile).isDirectory();
+    if (isDirectory) {
+        yield *walkSync(pathToFile);
+    } else {
+        yield pathToFile;
     }
-  });
+  }
 }
 
-function loadEvents(path) {
-  fs.readdir(path, async (err, files) => {
-    if (err) console.log(err);
-    for (var file of files) {
+const start = () => {
+  for (const event of walkSync(p.resolve(__dirname, 'events'))) {
+    // ENABLE IF LINUX
+    // const evtName = event.split('/').pop().split('.').shift(), evtFun = require(event);
+    // senko.on(evtName, (...args) => evtFun.run(senko, ...args));
 
-      if (fs.statSync(path + '/' + file).isDirectory()) await loadEvents(path + '/' + file);
-      try {
-        if (file.endsWith('.js')) {
-          var props = require(path + '/' + file);
-          console.log(`EVENT_${file} loaded`);
-          senko.on(props.help.name, (...args) => props.run(...args, senko));
-        }
-      } catch (err) {
-        console.log(err.stack);
-      }
-    }
-  });
-}
-
-async function start(){
-  await loadCommands(p.join(__dirname, "commands"));
-  await loadEvents(p.join(__dirname, "events"));
-  senko.login(token).catch(err => console.log(err.stack));
+    //Disable IF WINDOWS
+    senko.on(evtFun.help.name, (...args) => evtFun.run(senko, ...args));
+  }
+  for(const cmd of walkSync(p.resolve(__dirname, 'commands'))) {
+    if(!cmd.endsWith('.js')) return;
+    const cmdFun = require(cmd);
+    (async function() {
+      await senko.commands.defer;
+      if (senko.commands.isReady) senko.commands.set(cmdFun.help.name, cmdFun);
+    }());
+  }
+  senko.login(token);
 }
 start();

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const GuildWarnings = require('./models/warnings');
-const {addToGlobal} = require('./util/addToGlobal');
 const {
     Client
 } = require('discord.js');
@@ -11,7 +10,6 @@ module.exports = class mongo {
     /**
      * @typedef MongoConnectionOptions
      * @property {string} url
-     * @property {boolean} 
      */
 
     /**
@@ -36,8 +34,6 @@ module.exports = class mongo {
         mongoose.model('guildWarnings', GuildWarnings);
         mongoose.connection
         .once('open', (db) => {
-            addToGlobal('guildWarnings', GuildWarnings);
-            addToGlobal('db', db);
             console.log("Mongo connected!");
         })
         .on('error', (err) => {
@@ -68,8 +64,6 @@ module.exports = class mongo {
         if (!options.moderator) return new Error('ModeratorID missing from MongoWarningOptions');
         if (!options.reason) options.reason = 'No reason provided';
         options.time = Date.now();
-
-        await mongoose.connection
         await mongoose.model('guildWarnings').create(options);
         console.log(`created: ${options}`)
         return this;
@@ -86,8 +80,6 @@ module.exports = class mongo {
         //Validation
         if (!guild) return new Error("Invalid/Missing guild in mongo.fetchAllWarnings");
         if (!user) return new Error("Invalid/Missing user in mongo.fetchAllWarnings");
-
-        await mongoose.connection;
         var data = [];
         var list = await mongoose.model('guildWarnings').find({user: user, guild: guild});
         list.forEach(doc => {

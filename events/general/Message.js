@@ -1,6 +1,3 @@
-const {
-    prefix
-} = require('../../config.json');
 
 exports.run = async (msg, senko) => {
     const prefix = senko.settings.get(msg.guild.id, 'prefix');
