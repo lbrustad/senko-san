@@ -1,10 +1,15 @@
 // Prerequisites loading code
-const { prefix, token } = require('./config.json');
+const {
+  token
+} = require('./config.json');
 const Discord = require('discord.js');
-const senko = new Discord.Client({ disableEveryone: true });
+const senko = new Discord.Client({
+  disableEveryone: true
+});
 const Enmap = require('enmap');
 const fs = require('fs');
 const pack = require('./package.json');
+const p = require('path');
 require('http').createServer().listen(3000);
 // Error handling
 senko.on('error', err => {
@@ -12,9 +17,12 @@ senko.on('error', err => {
 })
 // Startup Procedure
 senko.on('ready', async () => {
+
   senko.guilds.forEach(guild => {
     senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
   });
+=======
+
   console.log(`-----------------------------------`)
   console.log(`Version ${pack.version}`)
   console.log(`Made by ${pack.author}`)
@@ -26,33 +34,26 @@ senko.on('ready', async () => {
 senko.commands = new Enmap({name: 'commands'});
 senko.settings = new Enmap({name: 'settings'});
 // Commands
-fs.readdir('./commands/', (err, files) => {
+
+
+function loadCommands(path) {
+  fs.readdir(path, async (err, files) => {
     if (err) console.log(err);
-
-    let jsfile = files.filter(f => f.split('.').pop() === 'js');
-    if (jsfile.length <= 0) {
-        return console.log('Couldn\'t find commands');
+    for (var file of files) {
+      if (fs.statSync(path + '/' + file).isDirectory()) await loadCommands(path + '/' + file);
+      try {
+        if (file.endsWith('.js')) {
+          var props = require(path + '/' + file);
+          console.log(`${file} loaded`);
+          senko.commands.set(props.help.name, props);
+        }
+      } catch (err) {
+        console.log(err.stack);
+      }
     }
-
-    jsfile.forEach((f, i) => { //eslint-disable-line no-unused-vars
-        let props = require(`./commands/${f}`);
-        console.log(`${f} loaded.`);
-        senko.commands.set(props.help.name, props);
-    });
-});
-
-// The real code that makes this bot a bot
-senko.on('message', message => {
-  if (message.author.bot) return;
-  if (!message.guild) return message.channel.send('Sorry, but DMs aren\'t supported. Don\'t go crying on me when you found a problem!');
-  if (message.content.indexOf(prefix) !== 0) return;
-
-	function clean(text) {
-  if (typeof(text) === "string")
-    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-  else
-    return text;
+  });
 }
+
 
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let command = args.shift().toLowerCase();
@@ -74,23 +75,36 @@ senko.on('message', message => {
     try {
       const code = args.join(" ");
       let evaled = eval(code);
+      =======
+                                                   
 
-      if (typeof evaled !== "string")
-        evaled = require("util").inspect(evaled);
+function loadEvents(path) {
+  fs.readdir(path, async (err, files) => {
+    if (err) console.log(err);
+    for (var file of files) {
 
-      message.channel.send(clean(evaled), {code:"xl"});
-    } catch (err) {
-      message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+      if (fs.statSync(path + '/' + file).isDirectory()) await loadEvents(path + '/' + file);
+      try {
+        if (file.endsWith('.js')) {
+          var props = require(path + '/' + file);
+          console.log(`EVENT_${file} loaded`);
+          senko.on(props.help.name, (...args) => props.run(...args, senko));
+        }
+      } catch (err) {
+        console.log(err.stack);
+      }
     }
-  }
-});
+  });
+}
 
 senko.on('guildDelete', guild => {
   if (senko.settings.has(guild.id)) return senko.settings.delete(guild.id);
 });
 
 
-// The part that makes this bot go online
-senko.login(process.env.token).catch()
-// Self hosting
-// senko.login(token)
+async function start(){
+  await loadCommands(p.join(__dirname, "commands"));
+  await loadEvents(p.join(__dirname, "events"));
+  senko.login(token).catch(err => console.log(err.stack));
+}
+start();
