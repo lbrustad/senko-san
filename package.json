@@ -5,10 +5,10 @@
   "main": "senkoCore.js",
   "ownerid": "<@!254542844197470209>",
   "owner": "254542844197470209",
- "scripts": {
-  "start": "nohup node senkoCore.js > log.txt 2>&1 & echo $! > pid.txt",
-  "stop": "kill $(tail pid.txt)"
-},
+  "scripts": {
+    "start": "nohup node senkoCore.js > log.txt 2>&1 & echo $! > pid.txt",
+    "stop": "kill $(tail pid.txt)"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Crkza/senko-san"
