@@ -12,10 +12,10 @@ exports.run = async (senko, message, args) => {
     .addField("Author", `${pack.ownerid}`)
     .addField("Prefix", `\`${config.prefix}\``)
     .addField("Server Link:", "discord.gg/KfFTecu")
-    await message.channel.send(embed)
-    
+    await message.channel.send(embed);
 }
 
 exports.help = {
-    name: 'botinfo'
+    name: 'botinfo',
+    description: 'Displays info about the bot.'
 }

@@ -4,11 +4,11 @@ const Discord = require('discord.js');
 const senko = new Discord.Client({ disableEveryone: true });
 const Enmap = require('enmap');
 const fs = require('fs');
-const pack = require('./package.json')
-require('http').createServer().listen(3000)
+const pack = require('./package.json');
+require('http').createServer().listen(3000);
 // Error handling
-senko.on('error', async (err) => {
-     await console.log(await err)
+senko.on('error', err => {
+  console.log(err);
 })
 // Startup Procedure
 senko.on('ready', async () => {
@@ -18,7 +18,7 @@ senko.on('ready', async () => {
     console.log(`Incomplete Alpha`)
     console.log(`[${senko.user.username}] is now online.`);
     console.log(`Bot is on ${senko.guilds.size} servers.`)
-    senko.user.setActivity("w/ Nakano");
+    await senko.user.setActivity("w/ Nakano");
 });
 senko.commands = new Enmap();
 // Commands
@@ -38,26 +38,26 @@ fs.readdir('./commands/', (err, files) => {
 });
 
 // The real code that makes this bot a bot
-senko.on('message', async message => {
+senko.on('message', message => {
   if (message.author.bot) return;
-  if (message.channel.type === 'dm') return message.channel.send('Sorry, but DMs aren\'t supported. Don\'t go crying on me when you found a problem!')
+  if (!message.guild) return message.channel.send('Sorry, but DMs aren\'t supported. Don\'t go crying on me when you found a problem!');
   if (message.content.indexOf(prefix) !== 0) return;
-	if (!message.content.startsWith(prefix)) return;
 
 	function clean(text) {
   if (typeof(text) === "string")
     return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
   else
-      return text;
+    return text;
 }
 	
   let messageArray = message.content.split(' ');
-  let cmd = messageArray[0];
+  let [ cmd ] = messageArray;
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let command = args.shift().toLowerCase();
 
-  let cmdFile = senko.commands.get(cmd.slice(prefix.length));
-  if (cmdFile) cmdFile.run(senko, message, args);
+  let cmdFile = senko.commands.get(command);
+  if(!cmdFile) return;
+  cmdFile.run(senko, message, args);
 	
 	  if (message.content.startsWith(prefix + "eval")) {
     if(message.author.id !== pack.owner) return;
