@@ -1,6 +1,3 @@
-const Discord = require("discord.js");
-const config = require("../../config.json");
-const pack = require("../../package.json")
 exports.run = async (senko, message, args) => {
     let pfp = senko.user.displayAvatarURL;
     let embed = new Discord.RichEmbed()

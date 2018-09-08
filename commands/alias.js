@@ -16,7 +16,7 @@ exports.run = (senko, msg, args) => {
     }
     return msg.channel.send(`Removed **${aliases.join(', ')}** from **${cmd}**`);
   } else if(action === 'list') {
-    if (senko.settings.get(msg.guild.id, `aliases.${cmd}`).length) {
+    if (senko.settings.get(msg.guild.id, `aliases.${cmd}`) && senko.settings.get(msg.guild.id, `aliases.${cmd}`).length) {
       return msg.channel.send(`**${senko.settings.get(msg.guild.id, `aliases.${cmd}`).join(', ')}** refer to **${cmd}**`);
     } else {
       return msg.channel.send(`There are no aliases set for **${cmd}**`);
