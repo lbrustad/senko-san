@@ -12,15 +12,19 @@ senko.on('error', err => {
 })
 // Startup Procedure
 senko.on('ready', async () => {
-    console.log(`-----------------------------------`)
-    console.log(`Version ${pack.version}`)
-    console.log(`Made by ${pack.author}`)
-    console.log(`Incomplete Alpha`)
-    console.log(`[${senko.user.username}] is now online.`);
-    console.log(`Bot is on ${senko.guilds.size} servers.`)
-    await senko.user.setActivity("w/ Nakano");
+  senko.guilds.forEach(guild => {
+    senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
+  });
+  console.log(`-----------------------------------`)
+  console.log(`Version ${pack.version}`)
+  console.log(`Made by ${pack.author}`)
+  console.log(`Incomplete Alpha`)
+  console.log(`[${senko.user.username}] is now online.`);
+  console.log(`Bot is on ${senko.guilds.size} servers.`)
+  await senko.user.setActivity("w/ Nakano");
 });
-senko.commands = new Enmap();
+senko.commands = new Enmap({name: 'commands'});
+senko.settings = new Enmap({name: 'settings'});
 // Commands
 fs.readdir('./commands/', (err, files) => {
     if (err) console.log(err);
@@ -49,13 +53,19 @@ senko.on('message', message => {
   else
     return text;
 }
-	
-  let messageArray = message.content.split(' ');
-  let [ cmd ] = messageArray;
+
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let command = args.shift().toLowerCase();
 
-  let cmdFile = senko.commands.get(command);
+  let aliasCmd;
+  for(const aliases of Object.values(senko.settings.get(message.guild.id, 'aliases'))) {
+    if(aliases.find(key => key === command)) {
+      const guildAliases = senko.settings.get(message.guild.id, 'aliases'), cmdName = Object.keys(guildAliases).find(key => guildAliases[key] === aliases);
+      aliasCmd = cmdName;
+    }
+  }
+
+  let cmdFile = senko.commands.get(command) || senko.commands.get(aliasCmd);
   if(!cmdFile) return;
   cmdFile.run(senko, message, args);
 	
@@ -73,6 +83,10 @@ senko.on('message', message => {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }
   }
+});
+
+senko.on('guildDelete', guild => {
+  if (senko.settings.has(guild.id)) return senko.settings.delete(guild.id);
 });
 
 
