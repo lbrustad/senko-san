@@ -17,6 +17,12 @@ senko.on('error', err => {
 })
 // Startup Procedure
 senko.on('ready', async () => {
+
+  senko.guilds.forEach(guild => {
+    senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
+  });
+=======
+
   console.log(`-----------------------------------`)
   console.log(`Version ${pack.version}`)
   console.log(`Made by ${pack.author}`)
@@ -25,7 +31,8 @@ senko.on('ready', async () => {
   console.log(`Bot is on ${senko.guilds.size} servers.`)
   await senko.user.setActivity("w/ Nakano");
 });
-senko.commands = new Enmap();
+senko.commands = new Enmap({name: 'commands'});
+senko.settings = new Enmap({name: 'settings'});
 // Commands
 
 
@@ -47,6 +54,30 @@ function loadCommands(path) {
   });
 }
 
+
+  let args = message.content.slice(prefix.length).trim().split(/ +/g);
+  let command = args.shift().toLowerCase();
+
+  let aliasCmd;
+  for(const aliases of Object.values(senko.settings.get(message.guild.id, 'aliases'))) {
+    if(aliases.find(key => key === command)) {
+      const guildAliases = senko.settings.get(message.guild.id, 'aliases'), cmdName = Object.keys(guildAliases).find(key => guildAliases[key] === aliases);
+      aliasCmd = cmdName;
+    }
+  }
+
+  let cmdFile = senko.commands.get(command) || senko.commands.get(aliasCmd);
+  if(!cmdFile) return;
+  cmdFile.run(senko, message, args);
+	
+	  if (message.content.startsWith(prefix + "eval")) {
+    if(message.author.id !== pack.owner) return;
+    try {
+      const code = args.join(" ");
+      let evaled = eval(code);
+      =======
+                                                   
+
 function loadEvents(path) {
   fs.readdir(path, async (err, files) => {
     if (err) console.log(err);
@@ -65,6 +96,10 @@ function loadEvents(path) {
     }
   });
 }
+
+senko.on('guildDelete', guild => {
+  if (senko.settings.has(guild.id)) return senko.settings.delete(guild.id);
+});
 
 
 async function start(){
