@@ -4,13 +4,13 @@
 Discord.JS bot by Cappuchino
 ## Selfhosting
 To selfhost make a config.json file and put this in here
-```{
+{
 
     "prefix": "Your Prefix",
     
     "token": "Your Bot Token"
 
-}```
+}
 
 
 
