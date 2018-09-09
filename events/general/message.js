@@ -44,7 +44,3 @@ exports.run = async (senko, msg) => {
         }
     }
 }
-
-exports.help = {
-    name: 'message'
-}
