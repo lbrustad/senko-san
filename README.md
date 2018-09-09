@@ -1,6 +1,6 @@
 
 # Senko-san
-
+[![Discord Bots](https://discordbots.org/api/widget/363384807734116354.svg)](https://discordbots.org/bot/363384807734116354)
 Discord.JS bot by Cappuchino
 ## Selfhosting
 To selfhost make a config.json file and put this in here
