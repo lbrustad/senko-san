@@ -1,5 +1,5 @@
 // const cmds = require("../commands.json");
-module.exports.run = async (senko, message, args, con) => {
+exports.run = async (senko, message, args, con) => {
   const embed = { color: 0x009966 }, cmds = [];
   senko.commands.forEach(command => {
     cmds.push(`\`${command.help.usage ? command.help.usage : command.help.name}\`: **${command.help.description}**`);

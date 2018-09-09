@@ -24,6 +24,7 @@ exports.run = async (senko, msg) => {
 
     let cmdFile = senko.commands.get(command) || senko.commands.get(aliasCmd);
     if (!cmdFile) return;
+    console.log(cmdFile);
     cmdFile.run(senko, msg, args);
 
     if (msg.content.startsWith(prefix + "eval")) {
@@ -42,4 +43,8 @@ exports.run = async (senko, msg) => {
             msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
         }
     }
+}
+
+exports.help = {
+    name: 'message'
 }
