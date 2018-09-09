@@ -1,6 +1,6 @@
 {
   "name": "senko-san",
-  "version": "0.1.31",
+  "version": "0.1.4",
   "description": "Discord.JS bot",
   "main": "senkoCore.js",
   "ownerid": "<@!254542844197470209>",
