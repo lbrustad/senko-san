@@ -12,7 +12,3 @@ exports.run = async senko => {
   console.log(`Bot is on ${senko.guilds.size} servers.`);
   await senko.user.setActivity("w/ Nakano");
 };
-
-exports.help = {
-  name: 'ready'
-};

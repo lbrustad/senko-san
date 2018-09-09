@@ -5,7 +5,6 @@ const Enmap = require('enmap');
 const fs = require('fs');
 const p = require('path');
 const { token } = require('./config.json');
-const pack = require('./package.json');
 require('http').createServer().listen(3000);
 
 senko.commands = new Enmap({name: 'commands'});
@@ -27,7 +26,7 @@ function *walkSync(dir) {
 
 const start = () => {
   for (const event of walkSync(p.resolve(__dirname, 'events'))) {
-    const evtName = event.split('/').pop().split('.').shift(), evtFun = require(event);
+    const delims = { win32: '\\', linux: '/' }, evtName = event.split(`${delims[process.platform]}`).pop().split('.').shift(), evtFun = require(event);
     senko.on(evtName, (...args) => evtFun.run(senko, ...args));
   }
   for(const cmd of walkSync(p.resolve(__dirname, 'commands'))) {
