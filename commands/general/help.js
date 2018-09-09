@@ -4,7 +4,7 @@ exports.run = async (senko, message, args, con) => {
   senko.commands.forEach(command => {
     cmds.push(`\`${command.help.usage ? command.help.usage : command.help.name}\`: **${command.help.description}**`);
   });
-  await message.channel.send({ embed: { title: 'Showing all commands for Project Senko', color: 0x009966, description: cmds.join('\n')} });
+  await message.channel.send({ embed: { title: 'Showing all commands for Project Senko', color: 0xf28a30, description: cmds.join('\n')} });
     // let cmd = args.join(" ");
     // if(!cmd) message.channel.send(cmds.all);
 
