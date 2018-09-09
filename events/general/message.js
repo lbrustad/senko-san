@@ -1,5 +1,4 @@
-
-exports.run = async (msg, senko) => {
+exports.run = async (senko, msg) => {
     const prefix = senko.settings.get(msg.guild.id, 'prefix');
     if (msg.author.bot) return;
     if (!msg.guild) return msg.channel.send('Sorry, but DMs aren\'t supported. Don\'t go crying on me when you found a problem!');
@@ -25,6 +24,7 @@ exports.run = async (msg, senko) => {
 
     let cmdFile = senko.commands.get(command) || senko.commands.get(aliasCmd);
     if (!cmdFile) return;
+    console.log(cmdFile);
     cmdFile.run(senko, msg, args);
 
     if (msg.content.startsWith(prefix + "eval")) {
@@ -43,8 +43,4 @@ exports.run = async (msg, senko) => {
             msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
         }
     }
-}
-
-exports.help = {
-    name: 'message'
 }

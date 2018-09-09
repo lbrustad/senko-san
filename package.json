@@ -6,7 +6,8 @@
   "ownerid": "<@!254542844197470209>",
   "owner": "254542844197470209",
   "scripts": {
-    "start": "node senkoCore.js"
+    "start": "nohup node senkoCore.js > log.txt 2>&1 & echo $! > pid.txt",
+    "stop": "kill $(tail pid.txt)"
   },
   "repository": {
     "type": "git",
@@ -21,10 +22,10 @@
   "author": "Cappuchino",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite-pool": "^0.1.2",
     "discord.js": "^11.2.1",
     "discord.js-commando": "^0.10.0",
-    "enmap": "^3.1.4",
-    "mongoose": "^5.2.13",
+    "enmap": "4.0.12",
     "ms": "^2.1.1"
   }
 }
