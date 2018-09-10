@@ -11,11 +11,12 @@ exports.run = async (senko, msg, args) => {
     if (!reason) reason = 'No reason';
 
     senko.db.giveWarning({guild: msg.guild.id, user: user.id, moderator: msg.author.id, reason: reason});
-    msg.channel.send(`<@${user}> has been warned!`);
+    msg.channel.send(`${user} has been warned!`);
     
 }
 
 exports.help = {
     name: 'warn',
+    description: 'Warns a user for a specific reason.',
     usage: 'warn <@user|usern|userID> [Reason]'
 }

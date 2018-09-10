@@ -1,3 +1,4 @@
+const Discord = require("discord.js")
 exports.run = async (senko, message, args) => {
     let pfp = senko.user.displayAvatarURL;
     let embed = new Discord.RichEmbed()
@@ -6,7 +7,7 @@ exports.run = async (senko, message, args) => {
     .setDescription(`Version ${pack.version} `)
     .setColor("#f28a30")
     .setThumbnail(pfp)
-    .addField("Author", `${pack.ownerid}`)
+    .addField("Author", `<@!${config.owner}>`)
     .addField("Prefix", `\`${config.prefix}\``)
     .addField("Server Link:", "discord.gg/KfFTecu")
     await message.channel.send(embed);

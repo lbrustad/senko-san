@@ -5,7 +5,6 @@ const Enmap = require('enmap');
 const fs = require('fs');
 const p = require('path');
 const { token } = require('./config.json');
-require('http').createServer().listen(3000);
 
 senko.commands = new Enmap({name: 'commands'});
 senko.settings = new Enmap({name: 'settings'});

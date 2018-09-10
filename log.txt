@@ -1,0 +1,16 @@
+nohup: ignoring input
+internal/modules/cjs/loader.js:583
+    throw err;
+    ^
+
+Error: Cannot find module 'better-sqlite-pool'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:581:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:507:25)
+    at Module.require (internal/modules/cjs/loader.js:637:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at new Enmap (D:\workspace\Discord Bots\Project Senko\senko-san\node_modules\enmap\src\index.js:58:24)
+    at Object.<anonymous> (D:\workspace\Discord Bots\Project Senko\senko-san\senkoCore.js:9:18)
+    at Module._compile (internal/modules/cjs/loader.js:689:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)
+    at Module.load (internal/modules/cjs/loader.js:599:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:538:12)

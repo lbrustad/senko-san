@@ -6,7 +6,7 @@ exports.run = async (senko, message, args) => {
         await message.channel.send("Usage: ```echo {message}```")
     };
     message.delete().catch(O_o=>{});
-    message.channel.send(sayMessage).catch();
+    message.channel.send(sayMessage).catch(OwO=>{});
 }
 
 exports.help = {
