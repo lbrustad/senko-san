@@ -5,6 +5,7 @@
   "main": "senkoCore.js",
   "scripts": {
     "start": "nohup node senkoCore.js > log.txt 2>&1 & echo $! > pid.txt",
+    "startd": "nohup node senkoCore.js > log.txt 2>&1 & echo $! > pid.txt",
     "stop": "kill $(tail pid.txt)"
   },
   "repository": {

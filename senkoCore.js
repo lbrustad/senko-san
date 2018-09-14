@@ -37,5 +37,8 @@ const start = () => {
     }());
   }
   senko.login(token);
+  bot.on('disconnected', function() {
+    senko.login(token);
+});
 }
 start();
