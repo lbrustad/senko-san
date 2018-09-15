@@ -2,9 +2,9 @@ const pack = require('../../package.json');
 const mongo = require('../../provider/mongo');
 const {mongourl} = require('../../config.json');
 exports.run = async senko => {
-  // senko.guilds.forEach(guild => {
-  //   senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
-  // });
+  await senko.guilds.forEach(guild => {
+    senko.settings.ensure(guild.id, { prefix: 'sk-', aliases: {} });
+  });
   const db = new mongo({url: mongourl});
   senko.db = db;
   console.log(`-----------------------------------`);

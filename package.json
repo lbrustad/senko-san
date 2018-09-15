@@ -25,7 +25,11 @@
     "better-sqlite-pool": "^0.1.2",
     "discord.js": "^11.2.1",
     "discord.js-commando": "^0.10.0",
-    "enmap": "4.0.12",
-    "ms": "^2.1.1"
+    "enmap": "^4.0.12",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
+    "mongoose": "^5.2.14",
+    "ms": "^2.1.1",
+    "node-gyp": "^3.8.0"
   }
 }
